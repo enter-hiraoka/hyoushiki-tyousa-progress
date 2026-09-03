@@ -294,6 +294,17 @@
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.lat},${r.lng}`)}`;
   }
 
+  function appleMapsUrl(r) {
+    return `https://maps.apple.com/?ll=${encodeURIComponent(`${r.lat},${r.lng}`)}&q=${encodeURIComponent(`番号${r.number}`)}`;
+  }
+
+  function isIOS() {
+    const ua = navigator.userAgent || "";
+    // iPadOS13以降はUAがMacと同じになるため、タッチ対応も合わせて判定する
+    const isIPadOS = ua.includes("Macintosh") && navigator.maxTouchPoints > 1;
+    return /iPhone|iPad|iPod/.test(ua) || isIPadOS;
+  }
+
   function streetViewUrl(r) {
     return `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${encodeURIComponent(`${r.lat},${r.lng}`)}`;
   }
@@ -649,7 +660,10 @@
         <p class="detail-address" id="mobileAddressText">住所を取得しています…</p>
         <div class="detail-actions">
           <a class="map-link street" href="${streetViewUrl(r)}" target="_blank" rel="noopener">ストリートビュー</a>
-          <a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>
+          ${isIOS()
+            ? `<a class="map-link google" href="${appleMapsUrl(r)}" target="_blank" rel="noopener">Appleマップ</a>`
+            : `<a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>`
+          }
         </div>
       `);
       bindMobileDetailHandlers(r);
