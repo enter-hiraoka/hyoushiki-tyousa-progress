@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 進捗データは pinmap/progress の1件だけ。
+    // それ以外のパスは一切読み書きできない。
+    match /pinmap/progress {
+      allow read, write: if true;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

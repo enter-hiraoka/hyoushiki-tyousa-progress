@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>標識撮影 管理マップ</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-title">
+      <h1>標識撮影 管理マップ</h1>
+      <p>撮影地点・住所・進捗を地図上で確認</p>
+    </div>
+    <div class="header-stats">
+      <div id="syncStatus" class="sync-status"></div>
+      <div id="shootProgress" class="shoot-progress"></div>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="map-area" id="mapPanel">
+      <div class="map-toolbar">
+        <button id="fitButton" class="sub-button compact" type="button">全体表示</button>
+      </div>
+      <div id="map"></div>
+      <div class="pin-legend" aria-label="ピンの色">
+        <span><i class="pin-dot unshot"></i><span>未撮影</span></span>
+        <span><i class="pin-dot shot"></i><span>撮影済み</span></span>
+      </div>
+      <section id="mobileMapDetail" class="mobile-map-detail" aria-live="polite"></section>
+    </section>
+
+    <aside class="sidebar" id="listPanel">
+      <div class="list-search-mobile">
+        <label for="listNumberSearch">番号検索</label>
+        <div class="search-row">
+          <input id="listNumberSearch" inputmode="numeric" pattern="[0-9]*" placeholder="例：74">
+          <button id="listSearchButton" type="button">探す</button>
+        </div>
+      </div>
+
+      <section class="add-point collapsed" id="addPointSection">
+        <button id="toggleAddPoint" class="add-point-toggle" type="button" aria-expanded="false" aria-controls="addPointBody">
+          <span class="add-point-toggle-text">
+            <strong>座標を登録・更新</strong>
+            <small>座標なし・不明の番号に追加</small>
+          </span>
+          <span class="add-point-chevron" aria-hidden="true">＋</span>
+        </button>
+        <div class="add-point-body" id="addPointBody" hidden>
+          <div class="add-grid">
+            <label>
+              <span>番号</span>
+              <input id="addNumber" inputmode="numeric" pattern="[0-9]*" placeholder="例：329">
+            </label>
+            <label>
+              <span>座標</span>
+              <input id="addCoordinate" placeholder="36.700000, 137.200000">
+            </label>
+          </div>
+          <div class="add-actions">
+            <button id="addPointButton" type="button">座標を登録</button>
+            <button id="clearAddedButton" type="button" class="sub-button">追加分を全削除</button>
+          </div>
+          <p class="add-help">既存番号が「不明・座標なし」の場合は、その番号に座標を登録できます。</p>
+          <p id="addMessage" class="add-message" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="detail" class="detail">
+        <div class="detail-empty">ピンまたは一覧の番号をクリックしてください。</div>
+      </section>
+
+      <div class="shoot-tools">
+        <button id="showAllShoot" type="button" class="shoot-filter filter-all active">すべて</button>
+        <button id="showUnshot" type="button" class="shoot-filter filter-unshot">未撮影</button>
+        <button id="showShot" type="button" class="shoot-filter filter-shot">撮影済み</button>
+      </div>
+
+      <div class="list-title">
+        <span>番号</span>
+        <span>座標</span><span>状態</span>
+      </div>
+      <div class="point-list" id="pointList"></div>
+
+      <div class="mobile-list-jump">
+        <button id="jumpToMapButton" type="button">↑ 地図へ</button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="./firebase-sync.js"></script>
+  <script src="./data.js"></script>
+  <script src="./script.js"></script>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="ページ上部へ戻る">↑ 上へ</button>
+</body>
+</html>
