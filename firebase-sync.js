@@ -57,7 +57,7 @@ let firstSnapshot = true;
 
 onSnapshot(
   progressRef,
-  { includeMetadataChanges: false },
+  { includeMetadataChanges: true },
   (snap) => {
     if (!snap.exists()) {
       if (firstSnapshot) {
@@ -68,6 +68,11 @@ onSnapshot(
       return;
     }
     firstSnapshot = false;
+
+    // hasPendingWrites=true は「自分がまさに今書き込んだデータのエコー」。
+    // 既にローカル側は正しい状態になっているので、ここで再マージする必要はない。
+    if (snap.metadata.hasPendingWrites) return;
+
     window.dispatchEvent(new CustomEvent("pinmap-remote-update", { detail: snap.data() }));
   },
   (err) => {

@@ -196,6 +196,22 @@
 
     allRows = buildRows();
     rebuildUI();
+
+    // 選択中の一覧行のハイライトと、開いている詳細パネルのチェック状態を
+    // 他端末からの更新に合わせて再同期する（rebuildUIは一覧の再構築のみ行うため）。
+    if (selected) {
+      const updatedSelected = allRows.find(x => x.number === selected.number);
+      if (updatedSelected) selected = updatedSelected;
+
+      const row = rowMap.get(selected.number);
+      if (row) row.classList.add("active");
+
+      const box = document.getElementById("detailShotCheck");
+      if (box) box.checked = isShot(selected);
+      const mobileBox = document.getElementById("mobileDetailShotCheck");
+      if (mobileBox) mobileBox.checked = isShot(selected);
+    }
+
     setSyncStatus("synced");
     suppressCloudPush = false;
   });
@@ -699,9 +715,10 @@
         marker.closePopup();
         return;
       }
-      const previous = highlightedNumber;
-      highlightedNumber = r.number;
-      refreshSelectedMarker(previous === r.number ? null : previous);
+      // ハイライトの管理はselectRow()に一本化する（ここで個別に highlightedNumber を
+      // 書き換えると、popupclose/popupopenの発火順序次第で直前に選んだピンが
+      // 正しく拡大されないことがあったため）。
+      selectRow(r, false);
     });
 
     marker.on("popupclose", () => {
