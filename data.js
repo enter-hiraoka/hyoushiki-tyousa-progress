@@ -876,10 +876,10 @@ const ROWS = [
   },
   {
     "number": 126,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.704035008335, 137.27943008105103",
+    "coordType": "coordinate",
+    "lat": 36.704035008335,
+    "lng": 137.27943008105103
   },
   {
     "number": 127,
@@ -1086,24 +1086,24 @@ const ROWS = [
   },
   {
     "number": 156,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.568062003294735, 137.21048102563458",
+    "coordType": "coordinate",
+    "lat": 36.568062003294735,
+    "lng": 137.21048102563458
   },
   {
     "number": 157,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.60832294922323, 137.28346975706663",
+    "coordType": "coordinate",
+    "lat": 36.60832294922323,
+    "lng": 137.28346975706663
   },
   {
     "number": 158,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.615682707010656, 137.28283384143043",
+    "coordType": "coordinate",
+    "lat": 36.615682707010656,
+    "lng": 137.28283384143043
   },
   {
     "number": 159,
