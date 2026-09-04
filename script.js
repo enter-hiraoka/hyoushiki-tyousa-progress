@@ -15,6 +15,7 @@
   const shootProgress = document.getElementById("shootProgress");
   const shootProgressReal = document.getElementById("shootProgressReal");
   const reshootAlert = document.getElementById("reshootAlert");
+  const outlierAlert = document.getElementById("outlierAlert");
 
   const listSearchEl = document.getElementById("listNumberSearch");
   const listSearchButton = document.getElementById("listSearchButton");
@@ -601,6 +602,20 @@
         reshootAlert.style.display = "none";
       }
     }
+
+    if (outlierAlert) {
+      const outliers = allRows.filter(r =>
+        (r.overridden || r.userAdded) && r.lat != null && r.lng != null && isFarFromToyama(r)
+      );
+      if (outliers.length > 0) {
+        const nums = outliers.map(r => r.number).join(", ");
+        outlierAlert.textContent = `⚠ 座標が富山県から外れている番号: ${nums}`;
+        outlierAlert.style.display = "";
+      } else {
+        outlierAlert.textContent = "";
+        outlierAlert.style.display = "none";
+      }
+    }
   }
 
   function rowVisibleByShoot(r) {
@@ -693,7 +708,7 @@
   }
 
   function setShot(r, checked) {
-    if (isAutoShot(r)) return;
+    if (isAutoShot(r)) return true;
 
     const nums = pairedNumbers(r.number);
     nums.forEach(n => {
@@ -716,6 +731,8 @@
       const mobileBox = document.getElementById("mobileDetailShotCheck");
       if (mobileBox) mobileBox.checked = isShot(selected);
     }
+
+    return true;
   }
 
   function reshootBlockHtml(r, idPrefix, includeUnnecessaryButton = false) {
@@ -780,7 +797,6 @@
     }
 
     if (r.coordType !== "coordinate") {
-      const canTrackShot = isAutoShot(r);
       const shotStatusHtml = isAutoShot(r)
         ? `<span class="detail-auto-shot">不要</span>`
         : "";
@@ -820,7 +836,10 @@
       <div class="detail-headerline">
         <span class="detail-badge">選択地点</span>
         <h2 class="detail-number"><strong>${r.number}</strong></h2>
-        <label class="detail-shot-inline"><input id="detailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>
+        ${isAutoShot(r)
+          ? `<span class="detail-auto-shot">不要</span>`
+          : `<label class="detail-shot-inline"><input id="detailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>`
+        }
       </div>
       <p class="detail-coord">${r.coordRaw}</p>
       <p class="detail-address" id="addressText">住所を取得しています…</p>
@@ -830,18 +849,23 @@
         <a class="map-link street" href="${streetViewUrl(r)}" target="_blank" rel="noopener">ストリートビュー</a>
         <a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>
       </div>
-      ${reshootBlockHtml(r, "detail", true)}
+      ${isAutoShot(r) ? "" : reshootBlockHtml(r, "detail", true)}
     `;
 
-    document.getElementById("detailShotCheck")?.addEventListener("change", e => setShot(r, e.target.checked));
-    bindReshootHandlers(r, "detail");
+    if (!isAutoShot(r)) {
+      document.getElementById("detailShotCheck")?.addEventListener("change", e => setShot(r, e.target.checked));
+      bindReshootHandlers(r, "detail");
+    }
 
     if (isMobile()) {
       setMobileDetail(`
         <div class="detail-headerline">
           <span class="detail-badge">選択地点</span>
           <h2 class="detail-number"><strong>${r.number}</strong></h2>
-          <label class="detail-shot-inline"><input id="mobileDetailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>
+          ${isAutoShot(r)
+            ? `<span class="detail-auto-shot">不要</span>`
+            : `<label class="detail-shot-inline"><input id="mobileDetailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>`
+          }
         </div>
         <p class="detail-coord">${r.coordRaw}</p>
         <p class="detail-address" id="mobileAddressText">住所を取得しています…</p>
@@ -853,7 +877,7 @@
             : `<a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>`
           }
         </div>
-        ${reshootBlockHtml(r, "mobile")}
+        ${isAutoShot(r) ? "" : reshootBlockHtml(r, "mobile")}
       `);
       bindMobileDetailHandlers(r);
       bindReshootHandlers(r, "mobile");
@@ -1016,13 +1040,10 @@
       checkbox.type = "checkbox";
       checkbox.checked = isShot(r);
       checkbox.setAttribute("aria-label", `番号 ${r.number} の撮影状態`);
-
-      if (isMobile()) {
-        checkbox.disabled = true;
-        checkLabel.classList.add("readonly");
-      } else {
-        checkbox.addEventListener("change", e => setShot(r, e.target.checked));
-      }
+      // 一覧からは誤ってチェックが外れることがないよう、常に読み取り専用にする。
+      // 撮影済みの変更は詳細パネルから行う。
+      checkbox.disabled = true;
+      checkLabel.classList.add("readonly");
 
       const text = document.createElement("span");
       text.textContent = "撮影済";
@@ -1142,6 +1163,16 @@
     return { lat, lng };
   }
 
+  // 富山県から大きく外れた座標を誤入力（桁ミスなど）した際に気づけるように、
+  // 実際のデータの緯度経度の範囲より少し広めの目安でチェックする。
+  const EXPECTED_LAT_RANGE = [36.2, 37.0];
+  const EXPECTED_LNG_RANGE = [136.7, 137.7];
+
+  function isFarFromToyama({ lat, lng }) {
+    return lat < EXPECTED_LAT_RANGE[0] || lat > EXPECTED_LAT_RANGE[1]
+      || lng < EXPECTED_LNG_RANGE[0] || lng > EXPECTED_LNG_RANGE[1];
+  }
+
   function showAddMessage(text, type = "") {
     if (!addMessage) return;
 
@@ -1164,6 +1195,14 @@
     if (!parsed) {
       showAddMessage("座標は「36.700000, 137.200000」の形式で入力してください。", "error");
       return;
+    }
+
+    if (isFarFromToyama(parsed)) {
+      const proceed = confirm(
+        `入力した座標（${parsed.lat}, ${parsed.lng}）は富山県内から大きく外れているようです。\n` +
+        `桁の打ち間違いなどがないか確認してください。\n\nこのまま登録しますか？`
+      );
+      if (!proceed) return;
     }
 
     const existing = allRows.find(r => r.number === number);

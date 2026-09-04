@@ -28,11 +28,13 @@
       <div id="map"></div>
       <div id="syncStatus" class="sync-status"></div>
       <div id="reshootAlert" class="reshoot-alert"></div>
+      <div id="outlierAlert" class="outlier-alert"></div>
       <div class="pin-legend" aria-label="ピンの色">
-        <span><i class="pin-dot unshot"></i><span>未撮影</span></span>
-        <span><i class="pin-dot shot"></i><span>撮影済み</span></span>
-        <span><i class="pin-dot reshoot"></i><span>位置情報ズレあり</span></span>
-        <span><i class="pin-dot reshoot-done"></i><span>再撮影済み</span></span>
+        <span><i class="pin-dot unshot"></i><span class="legend-full">未撮影</span><span class="legend-short">未</span></span>
+        <span><i class="pin-dot shot"></i><span class="legend-full">撮影済み</span><span class="legend-short">済</span></span>
+        <span><i class="pin-dot reshoot"></i><span class="legend-full">位置情報ズレあり</span><span class="legend-short">位置ズレ</span></span>
+        <span><i class="pin-dot reshoot-done"></i><span class="legend-full">再撮影済み</span><span class="legend-short">再済</span></span>
+        <span><i class="pin-dot unnecessary"></i><span class="legend-full">不要</span><span class="legend-short">不要</span></span>
       </div>
       <section id="mobileMapDetail" class="mobile-map-detail" aria-live="polite"></section>
     </section>
