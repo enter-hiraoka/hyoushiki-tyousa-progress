@@ -15,8 +15,8 @@
       <p>撮影地点・住所・進捗を地図上で確認</p>
     </div>
     <div class="header-stats">
-      <div id="syncStatus" class="sync-status"></div>
       <div id="shootProgress" class="shoot-progress"></div>
+      <div id="shootProgressReal" class="shoot-progress-sub"></div>
     </div>
   </header>
 
@@ -26,9 +26,13 @@
         <button id="fitButton" class="sub-button compact" type="button">全体表示</button>
       </div>
       <div id="map"></div>
+      <div id="syncStatus" class="sync-status"></div>
+      <div id="reshootAlert" class="reshoot-alert"></div>
       <div class="pin-legend" aria-label="ピンの色">
         <span><i class="pin-dot unshot"></i><span>未撮影</span></span>
         <span><i class="pin-dot shot"></i><span>撮影済み</span></span>
+        <span><i class="pin-dot reshoot"></i><span>位置情報ズレあり</span></span>
+        <span><i class="pin-dot reshoot-done"></i><span>再撮影済み</span></span>
       </div>
       <section id="mobileMapDetail" class="mobile-map-detail" aria-live="polite"></section>
     </section>

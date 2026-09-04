@@ -1107,17 +1107,17 @@ const ROWS = [
   },
   {
     "number": 159,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.68256663713401, 137.17628623184274",
+    "coordType": "coordinate",
+    "lat": 36.68256663713401,
+    "lng": 137.17628623184274
   },
   {
     "number": 160,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.69007269085232, 137.14868573968582",
+    "coordType": "coordinate",
+    "lat": 36.69007269085232,
+    "lng": 137.14868573968582
   },
   {
     "number": 161,
@@ -1128,17 +1128,17 @@ const ROWS = [
   },
   {
     "number": 162,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.61280993295218, 137.19193867013237",
+    "coordType": "coordinate",
+    "lat": 36.61280993295218,
+    "lng": 137.19193867013237
   },
   {
     "number": 163,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.66145260288775, 137.14954523797593",
+    "coordType": "coordinate",
+    "lat": 36.66145260288775,
+    "lng": 137.14954523797593
   },
   {
     "number": 164,
@@ -1156,52 +1156,52 @@ const ROWS = [
   },
   {
     "number": 166,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.62927251358262, 137.21244085390038",
+    "coordType": "coordinate",
+    "lat": 36.62927251358262,
+    "lng": 137.21244085390038
   },
   {
     "number": 167,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.671014892018285, 137.17260410392532",
+    "coordType": "coordinate",
+    "lat": 36.671014892018285,
+    "lng": 137.17260410392532
   },
   {
     "number": 168,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.70137122743806, 137.2175364123749",
+    "coordType": "coordinate",
+    "lat": 36.70137122743806,
+    "lng": 137.2175364123749
   },
   {
     "number": 169,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.7565543411473, 137.29212224313645",
+    "coordType": "coordinate",
+    "lat": 36.7565543411473,
+    "lng": 137.29212224313645
   },
   {
     "number": 170,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.7198253377684, 137.14936615458652",
+    "coordType": "coordinate",
+    "lat": 36.7198253377684,
+    "lng": 137.14936615458652
   },
   {
     "number": 171,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.73374755595665, 137.2045220642663",
+    "coordType": "coordinate",
+    "lat": 36.73374755595665,
+    "lng": 137.2045220642663
   },
   {
     "number": 172,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null
+    "coordRaw": "36.74359339598439, 137.2448304034373",
+    "coordType": "coordinate",
+    "lat": 36.74359339598439,
+    "lng": 137.2448304034373
   },
   {
     "number": 173,

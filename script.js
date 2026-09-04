@@ -13,6 +13,8 @@
   const detailEl = document.getElementById("detail");
   const mobileMapDetail = document.getElementById("mobileMapDetail");
   const shootProgress = document.getElementById("shootProgress");
+  const shootProgressReal = document.getElementById("shootProgressReal");
+  const reshootAlert = document.getElementById("reshootAlert");
 
   const listSearchEl = document.getElementById("listNumberSearch");
   const listSearchButton = document.getElementById("listSearchButton");
@@ -85,8 +87,29 @@
     }
   }
 
+  function loadUnnecessaryOverrides() {
+    try {
+      const parsed = JSON.parse(safeGet("coordinatePinUnnecessaryOverrides", "{}"));
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function loadGenericFlagState(key) {
+    try {
+      const parsed = JSON.parse(safeGet(key, "{}"));
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
   let addedRows = loadAddedRows();
   let coordinateOverrides = loadOverrides();
+  let unnecessaryOverrides = loadUnnecessaryOverrides();
+  let reshootNeeded = loadGenericFlagState("coordinatePinReshootNeeded");
+  let reshootDone = loadGenericFlagState("coordinatePinReshootDone");
   let shotState = loadShotState();
 
   function normalizeDuplicateShotState() {
@@ -120,6 +143,58 @@
     pushToCloud();
   }
 
+  function saveUnnecessaryOverrides() {
+    safeSet("coordinatePinUnnecessaryOverrides", JSON.stringify(unnecessaryOverrides));
+    pushToCloud();
+  }
+
+  function saveReshootNeeded() {
+    safeSet("coordinatePinReshootNeeded", JSON.stringify(reshootNeeded));
+    pushToCloud();
+  }
+
+  function saveReshootDone() {
+    safeSet("coordinatePinReshootDone", JSON.stringify(reshootDone));
+    pushToCloud();
+  }
+
+  function needsReshoot(r) {
+    if (isAutoShot(r)) return false;
+    return reshootNeeded[String(r.number)] === true && reshootDone[String(r.number)] !== true;
+  }
+
+  function reshootResolved(r) {
+    if (isAutoShot(r)) return false;
+    return reshootDone[String(r.number)] === true;
+  }
+
+  function setReshootNeeded(r, checked) {
+    if (checked) {
+      reshootNeeded[String(r.number)] = true;
+      delete reshootDone[String(r.number)];
+      saveReshootDone();
+    } else {
+      delete reshootNeeded[String(r.number)];
+      delete reshootDone[String(r.number)];
+      saveReshootDone();
+    }
+    saveReshootNeeded();
+  }
+
+  function setReshootDone(r, checked) {
+    if (checked) {
+      reshootDone[String(r.number)] = true;
+      // 再撮影済み＝撮影は完了しているので、撮影済みフラグも一緒に立てる
+      if (!isAutoShot(r) && shotState[String(r.number)] !== true) {
+        shotState[String(r.number)] = true;
+        saveShotState();
+      }
+    } else {
+      delete reshootDone[String(r.number)];
+    }
+    saveReshootDone();
+  }
+
   function saveShotState() {
     safeSet("coordinatePinShotState", JSON.stringify(shotState));
     pushToCloud();
@@ -148,7 +223,7 @@
   setSyncStatus("connecting");
 
   function currentCloudPayload() {
-    return { shotState, coordinateOverrides, addedRows };
+    return { shotState, coordinateOverrides, unnecessaryOverrides, reshootNeeded, reshootDone, addedRows };
   }
 
   function pushToCloud() {
@@ -175,6 +250,9 @@
     const incoming = {
       shotState: (data.shotState && typeof data.shotState === "object") ? data.shotState : {},
       coordinateOverrides: (data.coordinateOverrides && typeof data.coordinateOverrides === "object") ? data.coordinateOverrides : {},
+      unnecessaryOverrides: (data.unnecessaryOverrides && typeof data.unnecessaryOverrides === "object") ? data.unnecessaryOverrides : {},
+      reshootNeeded: (data.reshootNeeded && typeof data.reshootNeeded === "object") ? data.reshootNeeded : {},
+      reshootDone: (data.reshootDone && typeof data.reshootDone === "object") ? data.reshootDone : {},
       addedRows: Array.isArray(data.addedRows) ? data.addedRows : []
     };
 
@@ -188,28 +266,26 @@
     suppressCloudPush = true;
     shotState = incoming.shotState;
     coordinateOverrides = incoming.coordinateOverrides;
+    unnecessaryOverrides = incoming.unnecessaryOverrides;
+    reshootNeeded = incoming.reshootNeeded;
+    reshootDone = incoming.reshootDone;
     addedRows = incoming.addedRows;
 
     safeSet("coordinatePinShotState", JSON.stringify(shotState));
     safeSet("coordinatePinCoordinateOverrides", JSON.stringify(coordinateOverrides));
+    safeSet("coordinatePinUnnecessaryOverrides", JSON.stringify(unnecessaryOverrides));
+    safeSet("coordinatePinReshootNeeded", JSON.stringify(reshootNeeded));
+    safeSet("coordinatePinReshootDone", JSON.stringify(reshootDone));
     safeSet("coordinatePinAddedRows", JSON.stringify(addedRows));
 
     allRows = buildRows();
     rebuildUI();
 
-    // 選択中の一覧行のハイライトと、開いている詳細パネルのチェック状態を
+    // 選択中の一覧行のハイライトと、開いている詳細パネルの内容を
     // 他端末からの更新に合わせて再同期する（rebuildUIは一覧の再構築のみ行うため）。
     if (selected) {
       const updatedSelected = allRows.find(x => x.number === selected.number);
-      if (updatedSelected) selected = updatedSelected;
-
-      const row = rowMap.get(selected.number);
-      if (row) row.classList.add("active");
-
-      const box = document.getElementById("detailShotCheck");
-      if (box) box.checked = isShot(selected);
-      const mobileBox = document.getElementById("mobileDetailShotCheck");
-      if (mobileBox) mobileBox.checked = isShot(selected);
+      if (updatedSelected) selectRow(updatedSelected, false);
     }
 
     setSyncStatus("synced");
@@ -219,19 +295,28 @@
   function buildRows() {
     const base = ROWS.map(r => {
       const override = coordinateOverrides[String(r.number)];
-      if (!override) return { ...r };
-      return {
-        ...r,
-        coordRaw: `${override.lat}, ${override.lng}`,
-        coordType: "coordinate",
-        lat: override.lat,
-        lng: override.lng,
-        overridden: true
-      };
+      const row = override
+        ? {
+            ...r,
+            coordRaw: `${override.lat}, ${override.lng}`,
+            coordType: "coordinate",
+            lat: override.lat,
+            lng: override.lng,
+            overridden: true
+          }
+        : { ...r };
+
+      if (unnecessaryOverrides[String(r.number)]) {
+        // 座標が分かっている場合は消さずに残す（ピンは表示したまま、見た目だけ「不要」扱いにする）
+        return { ...row, markedUnnecessary: true };
+      }
+      return row;
     });
 
     const baseNums = new Set(base.map(r => r.number));
-    const extras = addedRows.filter(r => !baseNums.has(r.number));
+    const extras = addedRows
+      .filter(r => !baseNums.has(r.number))
+      .map(r => unnecessaryOverrides[String(r.number)] ? { ...r, markedUnnecessary: true } : r);
 
     return [...base, ...extras].sort((a,b) => a.number - b.number);
   }
@@ -244,11 +329,11 @@
   }
 
   function isAutoShot(r) {
-    return r.coordType === "unnecessary";
+    return r.coordType === "unnecessary" || r.markedUnnecessary === true;
   }
 
   function isUserModified(r) {
-    return !!r.userAdded || !!r.overridden;
+    return !!r.userAdded || !!r.overridden || !!r.markedUnnecessary;
   }
 
   function removeUserModification(r) {
@@ -256,6 +341,8 @@
 
     const label = r.userAdded
       ? `番号 ${r.number} の追加地点を削除しますか？`
+      : r.markedUnnecessary
+      ? `番号 ${r.number} の「不要」指定を解除しますか？`
       : `番号 ${r.number} に登録した座標を元に戻しますか？`;
 
     if (!confirm(label)) return;
@@ -268,6 +355,11 @@
     if (r.overridden) {
       delete coordinateOverrides[String(r.number)];
       saveOverrides();
+    }
+
+    if (r.markedUnnecessary) {
+      delete unnecessaryOverrides[String(r.number)];
+      saveUnnecessaryOverrides();
     }
 
     delete shotState[String(r.number)];
@@ -284,6 +376,27 @@
     if (markerGroup.getLayers().length) {
       map.fitBounds(markerGroup.getBounds().pad(0.04));
     }
+  }
+
+  function markUnnecessary(r) {
+    if (r.markedUnnecessary || isAutoShot(r)) return;
+    if (!confirm(`番号 ${r.number} を「不要」に変更しますか？\n（撮影対象から除外されます。いつでも元に戻せます）`)) return;
+
+    unnecessaryOverrides[String(r.number)] = true;
+    saveUnnecessaryOverrides();
+
+    if (reshootNeeded[String(r.number)] || reshootDone[String(r.number)]) {
+      delete reshootNeeded[String(r.number)];
+      delete reshootDone[String(r.number)];
+      saveReshootNeeded();
+      saveReshootDone();
+    }
+
+    allRows = buildRows();
+    rebuildUI(false);
+
+    const updated = allRows.find(x => x.number === r.number);
+    if (updated) selectRow(updated, false);
   }
 
   function isShot(r) {
@@ -346,7 +459,8 @@
 
   function iconFor(r) {
     const classes = [
-      isShot(r) ? "shot-pin" : "",
+      r.markedUnnecessary ? "unnecessary-pin" :
+        needsReshoot(r) ? "reshoot-pin" : (reshootResolved(r) ? "reshoot-done-pin" : (isShot(r) ? "shot-pin" : "")),
       highlightedNumber === r.number ? "selected-pin" : ""
     ].filter(Boolean).join(" ");
 
@@ -463,14 +577,35 @@
     backToTop.classList.toggle("visible", scrollTop > 240);
   }
 
+  function isConfirmedShot(r) {
+    return isShot(r) && !needsReshoot(r);
+  }
+
   function updateCount() {
-    const shotCount = allRows.filter(r => isShot(r)).length;
+    const shotCount = allRows.filter(r => isConfirmedShot(r)).length;
     if (shootProgress) shootProgress.textContent = `撮影済み ${shotCount} / ${allRows.length}`;
+
+    const targetRows = allRows.filter(r => !isAutoShot(r));
+    const targetShotCount = targetRows.filter(r => isConfirmedShot(r)).length;
+    if (shootProgressReal) {
+      shootProgressReal.textContent = `（不要を除く: ${targetShotCount} / ${targetRows.length}）`;
+    }
+
+    const reshootCount = allRows.filter(r => needsReshoot(r)).length;
+    if (reshootAlert) {
+      if (reshootCount > 0) {
+        reshootAlert.textContent = `⚠ 位置情報ズレ ${reshootCount}件`;
+        reshootAlert.style.display = "";
+      } else {
+        reshootAlert.textContent = "";
+        reshootAlert.style.display = "none";
+      }
+    }
   }
 
   function rowVisibleByShoot(r) {
-    if (shootFilter === "shot") return isShot(r);
-    if (shootFilter === "unshot") return !isShot(r);
+    if (shootFilter === "shot") return isConfirmedShot(r);
+    if (shootFilter === "unshot") return !isConfirmedShot(r);
     return true;
   }
 
@@ -492,9 +627,27 @@
 
     const row = rowMap.get(number);
     if (row) {
-      row.classList.toggle("shot", isShot(r));
+      row.classList.toggle("shot", isConfirmedShot(r));
+      row.classList.toggle("reshoot-row", needsReshoot(r));
+      row.classList.toggle("reshoot-done-row", reshootResolved(r));
       const box = row.querySelector(".shoot-check input");
       if (box) box.checked = isShot(r);
+
+      const coordWrap = row.querySelector(".point-coord-wrap");
+      if (coordWrap) {
+        coordWrap.querySelector(".point-flag-reshoot, .point-flag-reshoot-done")?.remove();
+        if (needsReshoot(r) || reshootResolved(r)) {
+          const flag = document.createElement("span");
+          if (needsReshoot(r)) {
+            flag.className = "point-flag point-flag-reshoot";
+            flag.textContent = "位置情報ズレ";
+          } else {
+            flag.className = "point-flag point-flag-reshoot-done";
+            flag.textContent = "再撮影済み";
+          }
+          coordWrap.appendChild(flag);
+        }
+      }
     }
 
     const marker = markerMap.get(number);
@@ -565,6 +718,38 @@
     }
   }
 
+  function reshootBlockHtml(r, idPrefix, includeUnnecessaryButton = false) {
+    const flagged = reshootNeeded[String(r.number)] === true;
+    const done = reshootDone[String(r.number)] === true;
+    return `
+      <div class="detail-reshoot-row">
+        <div class="detail-reshoot-checks">
+          <label class="detail-reshoot-inline"><input id="${idPrefix}ReshootNeeded" type="checkbox" ${flagged ? "checked" : ""}><span>位置情報ズレあり</span></label>
+          ${flagged ? `<label class="detail-reshoot-inline detail-reshoot-done"><input id="${idPrefix}ReshootDone" type="checkbox" ${done ? "checked" : ""}><span>再撮影済み</span></label>` : ""}
+        </div>
+        ${includeUnnecessaryButton && !isAutoShot(r) ? `<button type="button" id="${idPrefix}MarkUnnecessaryBtn" class="mark-unnecessary-button">この番号を「不要」にする</button>` : ""}
+      </div>
+    `;
+  }
+
+  function bindReshootHandlers(r, idPrefix) {
+    document.getElementById(`${idPrefix}ReshootNeeded`)?.addEventListener("change", e => {
+      setReshootNeeded(r, e.target.checked);
+      refreshRowAndMarker(r.number);
+      updateCount();
+      applyShootFilter();
+      selectRow(r, false);
+    });
+    document.getElementById(`${idPrefix}ReshootDone`)?.addEventListener("change", e => {
+      setReshootDone(r, e.target.checked);
+      refreshRowAndMarker(r.number);
+      updateCount();
+      applyShootFilter();
+      selectRow(r, false);
+    });
+    document.getElementById(`${idPrefix}MarkUnnecessaryBtn`)?.addEventListener("click", () => markUnnecessary(r));
+  }
+
   async function selectRow(r, zoomTo = true) {
     selected = r;
 
@@ -595,22 +780,24 @@
     }
 
     if (r.coordType !== "coordinate") {
+      const canTrackShot = isAutoShot(r);
+      const shotStatusHtml = isAutoShot(r)
+        ? `<span class="detail-auto-shot">不要</span>`
+        : "";
       const nonCoordHtml = `
         <div class="detail-headerline">
           <span class="detail-badge">選択地点</span>
           <h2 class="detail-number"><strong>${r.number}</strong></h2>
-          ${isAutoShot(r)
-            ? `<span class="detail-auto-shot">不要</span>`
-            : `<label class="detail-shot-inline"><input id="detailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>`
-          }
+          ${shotStatusHtml}
         </div>
         <p class="detail-coord ${statusClass(r)}">${coordDisplay(r)}</p>
-        <p class="detail-address">この番号には現在、地図ピンを表示できる座標がありません。</p>
+        <p class="detail-address">この番号には現在、地図ピンを表示できる座標がありません。座標を登録すると撮影済みチェックができるようになります。</p>
+        ${isAutoShot(r) ? "" : `<button type="button" id="markUnnecessaryBtn" class="mark-unnecessary-button">この番号を「不要」にする</button>`}
       `;
       detailEl.innerHTML = nonCoordHtml;
 
       if (!isAutoShot(r)) {
-        document.getElementById("detailShotCheck")?.addEventListener("change", e => setShot(r, e.target.checked));
+        document.getElementById("markUnnecessaryBtn")?.addEventListener("click", () => markUnnecessary(r));
       }
 
       if (isMobile()) {
@@ -618,13 +805,10 @@
           <div class="detail-headerline">
             <span class="detail-badge">選択地点</span>
             <h2 class="detail-number"><strong>${r.number}</strong></h2>
-            ${isAutoShot(r)
-              ? `<span class="detail-auto-shot">不要</span>`
-              : `<label class="detail-shot-inline"><input id="mobileDetailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>`
-            }
+            ${shotStatusHtml}
           </div>
           <p class="detail-coord ${statusClass(r)}">${coordDisplay(r)}</p>
-          <p class="detail-address">この番号には現在、地図ピンを表示できる座標がありません。</p>
+          <p class="detail-address">この番号には現在、地図ピンを表示できる座標がありません。座標を登録すると撮影済みチェックができるようになります。</p>
         `);
         bindMobileDetailHandlers(r);
       }
@@ -640,14 +824,17 @@
       </div>
       <p class="detail-coord">${r.coordRaw}</p>
       <p class="detail-address" id="addressText">住所を取得しています…</p>
+      ${r.markedUnnecessary ? `<p class="detail-unnecessary-note">この番号は「不要」に変更されています</p>` : ""}
       <p class="muted detail-hint">地図のピンを2回クリックするとストリートビューを別タブで開きます。</p>
       <div class="detail-actions">
         <a class="map-link street" href="${streetViewUrl(r)}" target="_blank" rel="noopener">ストリートビュー</a>
         <a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>
       </div>
+      ${reshootBlockHtml(r, "detail", true)}
     `;
 
     document.getElementById("detailShotCheck")?.addEventListener("change", e => setShot(r, e.target.checked));
+    bindReshootHandlers(r, "detail");
 
     if (isMobile()) {
       setMobileDetail(`
@@ -658,6 +845,7 @@
         </div>
         <p class="detail-coord">${r.coordRaw}</p>
         <p class="detail-address" id="mobileAddressText">住所を取得しています…</p>
+        ${r.markedUnnecessary ? `<p class="detail-unnecessary-note">この番号は「不要」に変更されています</p>` : ""}
         <div class="detail-actions">
           <a class="map-link street" href="${streetViewUrl(r)}" target="_blank" rel="noopener">ストリートビュー</a>
           ${isIOS()
@@ -665,8 +853,10 @@
             : `<a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>`
           }
         </div>
+        ${reshootBlockHtml(r, "mobile")}
       `);
       bindMobileDetailHandlers(r);
+      bindReshootHandlers(r, "mobile");
       centerSelectedMarkerOnMobile(r);
     }
 
@@ -756,8 +946,10 @@
 
     row.className = "point-row"
       + (r.userAdded ? " user-added" : "")
-      + (isShot(r) ? " shot" : "")
-      + (isAutoShot(r) ? " unnecessary-row" : "");
+      + (isConfirmedShot(r) ? " shot" : "")
+      + (isAutoShot(r) ? " unnecessary-row" : "")
+      + (needsReshoot(r) ? " reshoot-row" : "")
+      + (reshootResolved(r) ? " reshoot-done-row" : "");
 
     const no = document.createElement("span");
     no.className = "point-no";
@@ -770,6 +962,21 @@
     coord.textContent = coordDisplay(r);
     coord.setAttribute("role","button");
     coord.tabIndex = 0;
+
+    let flag = null;
+    if (needsReshoot(r)) {
+      flag = document.createElement("span");
+      flag.className = "point-flag point-flag-reshoot";
+      flag.textContent = "位置情報ズレ";
+    } else if (reshootResolved(r)) {
+      flag = document.createElement("span");
+      flag.className = "point-flag point-flag-reshoot-done";
+      flag.textContent = "再撮影済み";
+    }
+
+    const coordWrap = document.createElement("span");
+    coordWrap.className = "point-coord-wrap";
+    coordWrap.append(...[coord, flag].filter(Boolean));
 
     const open = async () => {
       await selectRow(r, true);
@@ -797,6 +1004,10 @@
       tail = document.createElement("span");
       tail.className = "auto-shot-label";
       tail.textContent = "済";
+    } else if (r.coordType !== "coordinate") {
+      tail = document.createElement("span");
+      tail.className = "auto-shot-label";
+      tail.textContent = "座標待ち";
     } else {
       const checkLabel = document.createElement("label");
       checkLabel.className = "shoot-check";
@@ -821,6 +1032,15 @@
     }
 
     if (isUserModified(r)) {
+      const modTag = document.createElement("span");
+      modTag.className = "point-flag point-flag-usermod";
+      modTag.textContent = r.userAdded
+        ? "追加した地点"
+        : r.markedUnnecessary
+        ? "不要に変更"
+        : "座標を修正";
+      coordWrap.appendChild(modTag);
+
       const deleteBtn = document.createElement("button");
       deleteBtn.type = "button";
       deleteBtn.className = "row-delete-button";
@@ -833,7 +1053,7 @@
       tail.appendChild?.(deleteBtn) || row.appendChild(deleteBtn);
     }
 
-    row.append(no, coord, tail);
+    row.append(...[no, coordWrap, tail].filter(Boolean));
     if (isUserModified(r)) row.classList.add("has-delete");
     listEl.appendChild(row);
     rowMap.set(r.number, row);
