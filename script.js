@@ -404,6 +404,15 @@
     return isAutoShot(r) || shotState[String(r.number)] === true;
   }
 
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
   function googleMapsUrl(r) {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${r.lat},${r.lng}`)}`;
   }
@@ -844,7 +853,7 @@
       <p class="detail-coord">${r.coordRaw}</p>
       <p class="detail-address" id="addressText">住所を取得しています…</p>
       ${r.markedUnnecessary ? `<p class="detail-unnecessary-note">この番号は「不要」に変更されています</p>` : ""}
-      <p class="muted detail-hint">地図のピンを2回クリックするとストリートビューを別タブで開きます。</p>
+      <p class="muted detail-hint">${r.remark ? escapeHtml(r.remark) : "地図のピンを2回クリックするとストリートビューを別タブで開きます。"}</p>
       <div class="detail-actions">
         <a class="map-link street" href="${streetViewUrl(r)}" target="_blank" rel="noopener">ストリートビュー</a>
         <a class="map-link google" href="${googleMapsUrl(r)}" target="_blank" rel="noopener">Googleマップ</a>
@@ -870,6 +879,7 @@
         <p class="detail-coord">${r.coordRaw}</p>
         <p class="detail-address" id="mobileAddressText">住所を取得しています…</p>
         ${r.markedUnnecessary ? `<p class="detail-unnecessary-note">この番号は「不要」に変更されています</p>` : ""}
+        ${r.remark ? `<p class="muted detail-hint">${escapeHtml(r.remark)}</p>` : ""}
         <div class="detail-actions">
           <a class="map-link street" href="${streetViewUrl(r)}" target="_blank" rel="noopener">ストリートビュー</a>
           ${isIOS()

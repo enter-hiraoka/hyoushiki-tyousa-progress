@@ -24,6 +24,19 @@
 }
 
 *{box-sizing:border-box}
+/* Leaflet はタイル/マーカー/コントロールの座標計算を content-box 前提で行っているため、
+   上の全称セレクタの border-box リセットが効いたままだとズーム時にピン位置がずれる。
+   Leaflet が内部で使う要素だけ元の content-box に戻す（自作のピン中身やポップアップの
+   見た目に影響しないよう、対象は Leaflet 自身のクラスに限定する）。 */
+.leaflet-container,
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-tile-container,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer{box-sizing:content-box}
 html,body{
   margin:0;
   height:100%;
