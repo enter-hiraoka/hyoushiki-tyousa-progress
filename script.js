@@ -38,6 +38,7 @@
 
   const markerGroup = L.featureGroup().addTo(map);
   const markerMap = new Map();
+  let overlapGroups = new Map(); // number -> [重なっている番号の配列]（2件以上の場合のみ）
   const rowMap = new Map();
   const addressCache = new Map();
 
@@ -468,20 +469,119 @@
   }
 
   function iconFor(r) {
+    const overlap = overlapGroups.get(r.number);
+    const overlapCount = overlap ? overlap.length - 1 : 0;
+
     const classes = [
       r.markedUnnecessary ? "unnecessary-pin" :
         needsReshoot(r) ? "reshoot-pin" : (reshootResolved(r) ? "reshoot-done-pin" : (isShot(r) ? "shot-pin" : "")),
-      highlightedNumber === r.number ? "selected-pin" : ""
+      highlightedNumber === r.number ? "selected-pin" : "",
+      overlapCount > 0 ? "has-overlap" : ""
     ].filter(Boolean).join(" ");
+
+    const badgeHtml = overlapCount > 0 ? `<i class="overlap-badge">+${overlapCount}</i>` : "";
 
     return L.divIcon({
       className: "number-pin",
-      html: `<span class="${classes}">${r.number}</span>`,
+      html: `<span class="${classes}">${r.number}</span>${badgeHtml}`,
       iconSize: [44, 44],
       iconAnchor: [22, 22],
       popupAnchor: [0, -22]
     });
   }
+
+  function computeOverlapGroups() {
+    const buckets = new Map();
+    markerMap.forEach((marker, number) => {
+      const pt = map.latLngToContainerPoint(marker.getLatLng());
+      // 画面上でおおよそ同じ位置（16pxグリッド）に来たピンを同じグループとみなす
+      const key = `${Math.round(pt.x / 16)}_${Math.round(pt.y / 16)}`;
+      if (!buckets.has(key)) buckets.set(key, []);
+      buckets.get(key).push(number);
+    });
+
+    const next = new Map();
+    buckets.forEach(numbers => {
+      if (numbers.length < 2) return;
+      const sorted = [...numbers].sort((a, b) => a - b);
+      sorted.forEach(n => next.set(n, sorted));
+    });
+    return next;
+  }
+
+  function updateOverlapBadges() {
+    const next = computeOverlapGroups();
+
+    const changedNumbers = new Set();
+    markerMap.forEach((marker, number) => {
+      const before = overlapGroups.get(number);
+      const after = next.get(number);
+      const beforeKey = before ? before.join(",") : "";
+      const afterKey = after ? after.join(",") : "";
+      if (beforeKey !== afterKey) changedNumbers.add(number);
+    });
+
+    overlapGroups = next;
+
+    changedNumbers.forEach(number => {
+      const r = allRows.find(x => x.number === number);
+      const marker = markerMap.get(number);
+      if (r && marker) marker.setIcon(iconFor(r));
+    });
+  }
+
+  let overlapPickerEl = null;
+
+  function closeOverlapPicker() {
+    if (overlapPickerEl) {
+      overlapPickerEl.remove();
+      overlapPickerEl = null;
+    }
+  }
+
+  function overlapStatusText(rr) {
+    if (isAutoShot(rr)) return "不要";
+    if (needsReshoot(rr)) return "位置情報ズレあり";
+    if (reshootResolved(rr)) return "再撮影済み";
+    if (isShot(rr)) return "撮影済み";
+    return "未撮影";
+  }
+
+  function showOverlapPicker(marker, numbers) {
+    closeOverlapPicker();
+
+    const box = document.createElement("div");
+    box.className = "overlap-picker";
+    box.innerHTML = `<p class="overlap-picker-title">近くに${numbers.length}件重なっています</p>` +
+      numbers.map(n => {
+        const rr = allRows.find(x => x.number === n);
+        const status = rr ? overlapStatusText(rr) : "";
+        return `<button type="button" class="overlap-pick" data-number="${n}">${n}番<span class="overlap-pick-status">${status}</span></button>`;
+      }).join("");
+
+    map.getContainer().appendChild(box);
+    overlapPickerEl = box;
+
+    const pt = map.latLngToContainerPoint(marker.getLatLng());
+    box.style.left = `${pt.x}px`;
+    box.style.top = `${pt.y}px`;
+
+    box.querySelectorAll(".overlap-pick").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        const n = Number(btn.dataset.number);
+        const rr = allRows.find(x => x.number === n);
+        closeOverlapPicker();
+        if (rr) selectRow(rr, true);
+      });
+    });
+  }
+
+  map.on("zoomend", updateOverlapBadges);
+  map.on("moveend", updateOverlapBadges);
+  map.on("click", closeOverlapPicker);
+  map.on("movestart", closeOverlapPicker);
+  map.on("zoomstart", closeOverlapPicker);
 
   function coordDisplay(r) {
     if (r.coordType === "coordinate") return r.coordRaw;
@@ -656,6 +756,8 @@
       row.classList.toggle("reshoot-done-row", reshootResolved(r));
       const box = row.querySelector(".shoot-check input");
       if (box) box.checked = isShot(r);
+      const mobileLabel = row.querySelector(".shoot-check-mobile");
+      if (mobileLabel) mobileLabel.textContent = isShot(r) ? "撮影済" : "未撮影";
 
       const coordWrap = row.querySelector(".point-coord-wrap");
       if (coordWrap) {
@@ -964,6 +1066,12 @@
     });
 
     marker.on("click", () => {
+      const group = overlapGroups.get(r.number);
+      if (group && group.length > 1) {
+        marker.closePopup();
+        showOverlapPicker(marker, group);
+        return;
+      }
       selectRow(r, false);
     });
 
@@ -1056,7 +1164,8 @@
       checkLabel.classList.add("readonly");
 
       const text = document.createElement("span");
-      text.textContent = "撮影済";
+      text.className = "shoot-check-label";
+      text.innerHTML = `<span class="shoot-check-full">撮影済</span><span class="shoot-check-mobile">${isShot(r) ? "撮影済" : "未撮影"}</span>`;
 
       checkLabel.append(checkbox, text);
       tail = checkLabel;
@@ -1115,6 +1224,8 @@
     if (center && zoom !== null) {
       map.setView(center, zoom);
     }
+
+    updateOverlapBadges();
   }
 
   rebuildUI(false);
@@ -1129,9 +1240,13 @@
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       map.invalidateSize();
+      updateOverlapBadges();
     });
   });
-  window.addEventListener("load", () => map.invalidateSize());
+  window.addEventListener("load", () => {
+    map.invalidateSize();
+    updateOverlapBadges();
+  });
 
   function findRowByInput(inputEl) {
     const raw = inputEl.value.trim();

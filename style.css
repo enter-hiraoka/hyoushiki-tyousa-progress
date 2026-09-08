@@ -257,6 +257,68 @@ a{color:inherit;text-decoration:none}
   z-index:9999;
 }
 
+/* 座標が近く、ピン同士が重なっている場合の「+N」バッジ */
+.overlap-badge{
+  position:absolute;
+  top:-4px;
+  right:-4px;
+  min-width:16px;
+  height:16px;
+  padding:0 3px;
+  border-radius:999px;
+  background:#ffc21a;
+  color:#5a3d00;
+  font-style:normal;
+  font-size:9px;
+  font-weight:800;
+  line-height:16px;
+  text-align:center;
+  border:2px solid #fff;
+  box-shadow:0 1px 4px rgba(0,0,0,.35);
+  pointer-events:none;
+}
+
+/* 重なっているピンをクリックしたときに出す選択リスト */
+.overlap-picker{
+  position:absolute;
+  z-index:1200;
+  transform:translate(-50%, calc(-100% - 16px));
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:8px;
+  min-width:150px;
+  max-width:220px;
+  box-shadow:0 8px 22px rgba(20,32,43,.28);
+}
+.overlap-picker-title{
+  margin:0 0 6px;
+  padding:0 2px;
+  font-size:11px;
+  font-weight:700;
+  color:var(--muted, #6b7785);
+}
+.overlap-pick{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  width:100%;
+  margin-top:4px;
+  padding:6px 8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#f7f8fa;
+  font-size:12px;
+  font-weight:700;
+  color:var(--text);
+  cursor:pointer;
+  text-align:left;
+}
+.overlap-pick:first-of-type{margin-top:0}
+.overlap-pick:hover{background:#eef1f5}
+.overlap-pick-status{font-size:10px;font-weight:600;color:var(--muted, #6b7785)}
+
 /* marker popup (PC only - never bound on mobile in script.js) */
 .point-popup{margin-bottom:14px}
 .point-popup .leaflet-popup-content-wrapper{
@@ -509,6 +571,7 @@ a{color:inherit;text-decoration:none}
 .shoot-check{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px}
 .shoot-check.readonly{opacity:.55}
 .shoot-check input:disabled{cursor:not-allowed}
+.shoot-check-mobile{display:none}
 .auto-shot-label{font-size:11px;font-weight:800;color:var(--muted);text-align:center}
 .row-delete-button{
   display:block;
@@ -646,6 +709,10 @@ a{color:inherit;text-decoration:none}
   }
 
   .shoot-check{flex-direction:row}
+  .shoot-check-full{display:none}
+  .shoot-check-mobile{display:inline}
+  .shoot-check:not(:has(input:checked)){opacity:1}
+  .shoot-check:not(:has(input:checked)) .shoot-check-mobile{color:var(--unshot);font-weight:700}
 
   /* 再撮影チェック行: PCは縦積みだが、スマホは不要ボタンが並ばず右側が空くので横並びにする */
   .detail-reshoot-checks{flex-direction:row;flex-wrap:wrap;gap:6px 16px}
