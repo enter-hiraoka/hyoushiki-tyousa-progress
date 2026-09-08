@@ -2377,10 +2377,10 @@ const ROWS = [
   },
   {
     "number": 298,
-    "coordRaw": "36.59514426979782, 136.92348601036906",
-    "coordType": "coordinate",
-    "lat": 36.59514426979782,
-    "lng": 136.92348601036906,
+    "coordRaw": "座標なし",
+    "coordType": "blank",
+    "lat": null,
+    "lng": null,
     "remark": null
   },
   {
