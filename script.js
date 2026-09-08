@@ -53,6 +53,13 @@
     [281, 282]
   ];
 
+  // 富山県から大きく外れた座標を誤入力（桁ミスなど）した際に気づけるように、
+  // 実際のデータの緯度経度の範囲より少し広めの目安でチェックする。
+  // rebuildUI() が早い段階（ページ読み込み直後）から isFarFromToyama() を
+  // 呼ぶ可能性があるため、TDZ（初期化前アクセス）エラーを避けるためにここで定義する。
+  const EXPECTED_LAT_RANGE = [36.2, 37.0];
+  const EXPECTED_LNG_RANGE = [136.7, 137.7];
+
   function safeGet(key, fallback = "") {
     try { return localStorage.getItem(key) ?? fallback; }
     catch { return fallback; }
@@ -1287,11 +1294,6 @@
 
     return { lat, lng };
   }
-
-  // 富山県から大きく外れた座標を誤入力（桁ミスなど）した際に気づけるように、
-  // 実際のデータの緯度経度の範囲より少し広めの目安でチェックする。
-  const EXPECTED_LAT_RANGE = [36.2, 37.0];
-  const EXPECTED_LNG_RANGE = [136.7, 137.7];
 
   function isFarFromToyama({ lat, lng }) {
     return lat < EXPECTED_LAT_RANGE[0] || lat > EXPECTED_LAT_RANGE[1]
