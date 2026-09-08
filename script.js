@@ -322,9 +322,19 @@
       return row;
     });
 
-    const baseNums = new Set(base.map(r => r.number));
-    const extras = addedRows
-      .filter(r => !baseNums.has(r.number))
+    const baseNums = new Set(base.map(r => Number(r.number)));
+
+    // 元データに既に存在する番号が addedRows（手動追加分）にも残っていると、
+    // 同じ番号のピンが2つ表示されてしまう。型のズレ（文字列/数値）にも
+    // 影響されないよう Number() で比較し、見つかった場合は保存データ自体も
+    // 掃除しておく。
+    const validAddedRows = addedRows.filter(r => !baseNums.has(Number(r.number)));
+    if (validAddedRows.length !== addedRows.length) {
+      addedRows = validAddedRows;
+      saveAddedRows();
+    }
+
+    const extras = validAddedRows
       .map(r => unnecessaryOverrides[String(r.number)] ? { ...r, markedUnnecessary: true } : r);
 
     return [...base, ...extras].sort((a,b) => a.number - b.number);
