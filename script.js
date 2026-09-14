@@ -213,6 +213,13 @@
   const syncStatusEl = document.getElementById("syncStatus");
   let suppressCloudPush = false;
   let lastSyncedSnapshot = "";
+  // Firestoreへの書き込みはscript.js側からは即座に確定しない（firebase-sync.js側で
+  // 700msデバウンスしてから実際にsetDocする）。その間に届く古いスナップショット
+  // （metadata変化だけのechoなど）を「他端末からの新しい更新」と誤認してローカルの
+  // 表示を巻き戻してしまうと、チェック操作直後に赤→グレー→赤と一瞬点滅して見える。
+  // これを防ぐため、自分の書き込みがサーバーに確定するまでは
+  // 受信したリモート更新の適用を保留する。
+  let pendingLocalPush = false;
 
   function setSyncStatus(state) {
     if (!syncStatusEl) return;
@@ -240,13 +247,22 @@
     if (!window.PinMapSync) return;
     const payload = currentCloudPayload();
     lastSyncedSnapshot = JSON.stringify(payload);
+    pendingLocalPush = true;
     window.PinMapSync.save(payload);
   }
 
   window.addEventListener("pinmap-sync-ready", () => setSyncStatus("synced"));
   window.addEventListener("pinmap-sync-saving", () => setSyncStatus("saving"));
-  window.addEventListener("pinmap-sync-saved", () => setSyncStatus("synced"));
-  window.addEventListener("pinmap-sync-error", () => setSyncStatus("error"));
+  window.addEventListener("pinmap-sync-saved", () => {
+    pendingLocalPush = false;
+    setSyncStatus("synced");
+  });
+  window.addEventListener("pinmap-sync-error", () => {
+    // 送信自体が失敗した場合は保留扱いのままにしておくとリモート更新を
+    // 永遠に無視し続けてしまうので解除する。
+    pendingLocalPush = false;
+    setSyncStatus("error");
+  });
 
   // クラウドにまだデータが無い（この端末が最初の同期）場合、今のローカルデータで作成する
   window.addEventListener("pinmap-sync-empty", () => {
@@ -268,6 +284,14 @@
     const incomingSnapshot = JSON.stringify(incoming);
     if (incomingSnapshot === lastSyncedSnapshot) {
       setSyncStatus("synced");
+      return;
+    }
+
+    // 自分がまさに保存しようとしている変更がまだサーバーに確定していない間は、
+    // それより古いスナップショットで表示を巻き戻さない（チェック時の点滅対策）。
+    // 確定後に届く最新スナップショットは通常lastSyncedSnapshotと一致するため、
+    // 上のガードで正しく素通りする。
+    if (pendingLocalPush) {
       return;
     }
     lastSyncedSnapshot = incomingSnapshot;

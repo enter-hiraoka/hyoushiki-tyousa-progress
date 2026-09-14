@@ -65,19 +65,19 @@ const ROWS = [
   },
   {
     "number": 9,
-    "coordRaw": "36.941347893992905, 137.5617821908966",
+    "coordRaw": "36.93051417003646, 137.57036551423298",
     "coordType": "coordinate",
-    "lat": 36.941347893992905,
-    "lng": 137.5617821908966,
-    "remark": "標識確認できず（南保熊野神社周辺）"
+    "lat": 36.93051417003646,
+    "lng": 137.57036551423298,
+    "remark": null
   },
   {
     "number": 10,
-    "coordRaw": "36.941347893992905, 137.5617821908966",
+    "coordRaw": "36.93051417003646, 137.57036551423298",
     "coordType": "coordinate",
-    "lat": 36.941347893992905,
-    "lng": 137.5617821908966,
-    "remark": "標識確認できず"
+    "lat": 36.93051417003646,
+    "lng": 137.57036551423298,
+    "remark": null
   },
   {
     "number": 11,
@@ -105,11 +105,11 @@ const ROWS = [
   },
   {
     "number": 14,
-    "coordRaw": "8号線 青木東～東狐の間の区間と想定 標識なし",
-    "coordType": "note",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.921911179509074, 137.4841771107114",
+    "coordType": "coordinate",
+    "lat": 36.921911179509074,
+    "lng": 137.4841771107114,
+    "remark": "新8号ではなく、旧8号線上にあり"
   },
   {
     "number": 15,
@@ -177,18 +177,18 @@ const ROWS = [
   },
   {
     "number": 23,
-    "coordRaw": "36.929748997440434, 137.48566047103202",
-    "coordType": "coordinate",
-    "lat": 36.929748997440434,
-    "lng": 137.48566047103202,
-    "remark": null
-  },
-  {
-    "number": 24,
     "coordRaw": "36°55'39.1\"N 137°29'18.0\"E",
     "coordType": "coordinate",
     "lat": 36.927527777777776,
     "lng": 137.48833333333332,
+    "remark": null
+  },
+  {
+    "number": 24,
+    "coordRaw": "36.92746206668176, 137.4882879860766",
+    "coordType": "coordinate",
+    "lat": 36.92746206668176,
+    "lng": 137.4882879860766,
     "remark": null
   },
   {
@@ -405,7 +405,7 @@ const ROWS = [
     "coordType": "coordinate",
     "lat": 36.82777273401649,
     "lng": 137.41166304208136,
-    "remark": null
+    "remark": "9/11座標位置変更しました。"
   },
   {
     "number": 52,
@@ -449,11 +449,11 @@ const ROWS = [
   },
   {
     "number": 57,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.83185120380528, 137.39779154301908",
+    "coordType": "coordinate",
+    "lat": 36.83185120380528,
+    "lng": 137.39779154301908,
+    "remark": "9/13座標追加"
   },
   {
     "number": 58,
@@ -497,11 +497,11 @@ const ROWS = [
   },
   {
     "number": 63,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.75788207524752, 137.36592798392633",
+    "coordType": "coordinate",
+    "lat": 36.75788207524752,
+    "lng": 137.36592798392633,
+    "remark": "9/13座標追加"
   },
   {
     "number": 64,
@@ -521,11 +521,11 @@ const ROWS = [
   },
   {
     "number": 66,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.756387129021334, 137.3234606073068",
+    "coordType": "coordinate",
+    "lat": 36.756387129021334,
+    "lng": 137.3234606073068,
+    "remark": "9/13座標追加\nB地点の示す位置が住所とズレあり"
   },
   {
     "number": 67,
@@ -577,11 +577,11 @@ const ROWS = [
   },
   {
     "number": 73,
-    "coordRaw": "不明",
-    "coordType": "unknown",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.67979174995322, 137.32803343485517",
+    "coordType": "coordinate",
+    "lat": 36.67979174995322,
+    "lng": 137.32803343485517,
+    "remark": "9/13座標追加"
   },
   {
     "number": 74,
@@ -593,8 +593,8 @@ const ROWS = [
   },
   {
     "number": 75,
-    "coordRaw": "74と75で道が重複しています。",
-    "coordType": "note",
+    "coordRaw": "",
+    "coordType": "blank",
     "lat": null,
     "lng": null,
     "remark": null
@@ -657,10 +657,10 @@ const ROWS = [
   },
   {
     "number": 83,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.714835091262856, 137.22071004540982",
+    "coordType": "coordinate",
+    "lat": 36.714835091262856,
+    "lng": 137.22071004540982,
     "remark": null
   },
   {
@@ -673,19 +673,19 @@ const ROWS = [
   },
   {
     "number": 85,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.70238490046199, 137.2078699127785",
+    "coordType": "coordinate",
+    "lat": 36.70238490046199,
+    "lng": 137.2078699127785,
     "remark": null
   },
   {
     "number": 86,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.70029758919708, 137.20700887177202",
+    "coordType": "coordinate",
+    "lat": 36.70029758919708,
+    "lng": 137.20700887177202,
+    "remark": "中村油店前"
   },
   {
     "number": 87,
@@ -697,10 +697,10 @@ const ROWS = [
   },
   {
     "number": 88,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.701170598258365, 137.2040794634235",
+    "coordType": "coordinate",
+    "lat": 36.701170598258365,
+    "lng": 137.2040794634235,
     "remark": null
   },
   {
@@ -713,26 +713,26 @@ const ROWS = [
   },
   {
     "number": 90,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.69900842181914, 137.2162648015888",
+    "coordType": "coordinate",
+    "lat": 36.69900842181914,
+    "lng": 137.2162648015888,
     "remark": null
   },
   {
     "number": 91,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.70180452387694, 137.18771398949855",
+    "coordType": "coordinate",
+    "lat": 36.70180452387694,
+    "lng": 137.18771398949855,
     "remark": null
   },
   {
     "number": 92,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.69205770190867, 137.21281488035817",
+    "coordType": "coordinate",
+    "lat": 36.69205770190867,
+    "lng": 137.21281488035817,
     "remark": null
   },
   {
@@ -753,34 +753,34 @@ const ROWS = [
   },
   {
     "number": 95,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.68740494797269, 137.2033113240466",
+    "coordType": "coordinate",
+    "lat": 36.68740494797269,
+    "lng": 137.2033113240466,
     "remark": null
   },
   {
     "number": 96,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.683869431135754, 137.20783731217023",
+    "coordType": "coordinate",
+    "lat": 36.683869431135754,
+    "lng": 137.20783731217023,
     "remark": null
   },
   {
     "number": 97,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.681918541424714, 137.18417668142501",
+    "coordType": "coordinate",
+    "lat": 36.681918541424714,
+    "lng": 137.18417668142501,
     "remark": null
   },
   {
     "number": 98,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.67974454246186, 137.1983037787993",
+    "coordType": "coordinate",
+    "lat": 36.67974454246186,
+    "lng": 137.1983037787993,
     "remark": null
   },
   {
@@ -793,18 +793,18 @@ const ROWS = [
   },
   {
     "number": 100,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.676136308976176, 137.2230061637965",
+    "coordType": "coordinate",
+    "lat": 36.676136308976176,
+    "lng": 137.2230061637965,
     "remark": null
   },
   {
     "number": 101,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.70296851530084, 137.19012019984876",
+    "coordType": "coordinate",
+    "lat": 36.70296851530084,
+    "lng": 137.19012019984876,
     "remark": null
   },
   {
@@ -817,10 +817,10 @@ const ROWS = [
   },
   {
     "number": 103,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.69667053121998, 137.21015725112787",
+    "coordType": "coordinate",
+    "lat": 36.69667053121998,
+    "lng": 137.21015725112787,
     "remark": null
   },
   {
@@ -849,18 +849,18 @@ const ROWS = [
   },
   {
     "number": 107,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.68025825900958, 137.22259509700146",
+    "coordType": "coordinate",
+    "lat": 36.68025825900958,
+    "lng": 137.22259509700146,
     "remark": null
   },
   {
     "number": 108,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.68866343353753, 137.21215347999734",
+    "coordType": "coordinate",
+    "lat": 36.68866343353753,
+    "lng": 137.21215347999734,
     "remark": null
   },
   {
@@ -873,11 +873,11 @@ const ROWS = [
   },
   {
     "number": 110,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.74617972823617, 137.22908213430426",
+    "coordType": "coordinate",
+    "lat": 36.74617972823617,
+    "lng": 137.22908213430426,
+    "remark": "9/14座標追加"
   },
   {
     "number": 111,
@@ -885,7 +885,7 @@ const ROWS = [
     "coordType": "blank",
     "lat": null,
     "lng": null,
-    "remark": null
+    "remark": "9/14座標確認\n不明→なし(A-B地点の範囲に標識ありません。)"
   },
   {
     "number": 112,
@@ -921,10 +921,10 @@ const ROWS = [
   },
   {
     "number": 116,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.69944066008517, 137.18313577341564",
+    "coordType": "coordinate",
+    "lat": 36.69944066008517,
+    "lng": 137.18313577341564,
     "remark": null
   },
   {
@@ -953,19 +953,19 @@ const ROWS = [
   },
   {
     "number": 120,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.690374371600704, 137.2267389734143",
+    "coordType": "coordinate",
+    "lat": 36.690374371600704,
+    "lng": 137.2267389734143,
     "remark": null
   },
   {
     "number": 121,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.667805083504426, 137.2232601725167",
+    "coordType": "coordinate",
+    "lat": 36.667805083504426,
+    "lng": 137.2232601725167,
+    "remark": "9/14座標追加"
   },
   {
     "number": 122,
@@ -1009,19 +1009,19 @@ const ROWS = [
   },
   {
     "number": 127,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.65735829419194, 137.19582830256962",
+    "coordType": "coordinate",
+    "lat": 36.65735829419194,
+    "lng": 137.19582830256962,
+    "remark": "9/14座標追加"
   },
   {
     "number": 128,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.75470005261387, 137.30930444120673",
+    "coordType": "coordinate",
+    "lat": 36.75470005261387,
+    "lng": 137.30930444120673,
+    "remark": "9/14座標追加\nA地点の示す位置が間違っています。"
   },
   {
     "number": 129,
@@ -1041,11 +1041,11 @@ const ROWS = [
   },
   {
     "number": 131,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.667329879110945, 137.21484005904665",
+    "coordType": "coordinate",
+    "lat": 36.667329879110945,
+    "lng": 137.21484005904665,
+    "remark": "9/14座標追加"
   },
   {
     "number": 132,
@@ -1057,11 +1057,11 @@ const ROWS = [
   },
   {
     "number": 133,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.73106732918466, 137.30157270509287",
+    "coordType": "coordinate",
+    "lat": 36.73106732918466,
+    "lng": 137.30157270509287,
+    "remark": "9/14座標追加A-B地点と住所に相違あり\n住所に従い座標を出しました。"
   },
   {
     "number": 134,
@@ -1081,11 +1081,11 @@ const ROWS = [
   },
   {
     "number": 136,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.740155437299585, 137.26414650605903",
+    "coordType": "coordinate",
+    "lat": 36.740155437299585,
+    "lng": 137.26414650605903,
+    "remark": "9/14座標追加"
   },
   {
     "number": 137,
@@ -1129,11 +1129,11 @@ const ROWS = [
   },
   {
     "number": 142,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.751874312398314, 137.25064059930045",
+    "coordType": "coordinate",
+    "lat": 36.751874312398314,
+    "lng": 137.25064059930045,
+    "remark": "9/14座標追加"
   },
   {
     "number": 143,
@@ -1169,11 +1169,11 @@ const ROWS = [
   },
   {
     "number": 147,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.73488945399614, 137.191466910023",
+    "coordType": "coordinate",
+    "lat": 36.73488945399614,
+    "lng": 137.191466910023,
+    "remark": "9/14座標追加"
   },
   {
     "number": 148,
@@ -1221,7 +1221,7 @@ const ROWS = [
     "coordType": "blank",
     "lat": null,
     "lng": null,
-    "remark": null
+    "remark": "9/14座標確認\n不明→なし(A-B地点の範囲に標識ありません。)"
   },
   {
     "number": 154,
@@ -1265,19 +1265,19 @@ const ROWS = [
   },
   {
     "number": 159,
-    "coordRaw": "36.68256663713401, 137.17628623184274",
+    "coordRaw": "36.68185794811225, 137.18425750173503",
     "coordType": "coordinate",
-    "lat": 36.68256663713401,
-    "lng": 137.17628623184274,
-    "remark": "9/4座標確認"
+    "lat": 36.68185794811225,
+    "lng": 137.18425750173503,
+    "remark": "9/4座標確認　9/11座標が停車駐車禁止場所のため撮影不可\n9/14座標変更"
   },
   {
     "number": 160,
-    "coordRaw": "36.689830092443884, 137.1489764097978",
+    "coordRaw": "36.698470294755985, 137.13227014633122",
     "coordType": "coordinate",
-    "lat": 36.689830092443884,
-    "lng": 137.1489764097978,
-    "remark": "9/4座標確認"
+    "lat": 36.698470294755985,
+    "lng": 137.13227014633122,
+    "remark": "9/4座標確認　9/11座標が停車駐車禁止場所のため撮影不可\n9/14座標変更"
   },
   {
     "number": 161,
@@ -1285,7 +1285,7 @@ const ROWS = [
     "coordType": "blank",
     "lat": null,
     "lng": null,
-    "remark": "9/4座標確認"
+    "remark": "9/4座標確認　9/14座標確認(A-B間の359号線には\nありませんが、56号線くら寿司側にはあります。)\n不明→なし(A-B地点の範囲に標識ありません。)"
   },
   {
     "number": 162,
@@ -1305,18 +1305,18 @@ const ROWS = [
   },
   {
     "number": 164,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": "9/4座標確認"
+    "coordRaw": "36.682248805158, 137.17023493750239\n(路上停車駐車禁止区間のため撮影不可)",
+    "coordType": "coordinate",
+    "lat": 36.682248805158,
+    "lng": 137.17023493750239,
+    "remark": "9/4座標確認　9/14座標確認(路上停車駐車禁止区間のため撮影不可)"
   },
   {
     "number": 165,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.694825825356084, 137.21280134452311",
+    "coordType": "coordinate",
+    "lat": 36.694825825356084,
+    "lng": 137.21280134452311,
     "remark": null
   },
   {
@@ -1377,26 +1377,26 @@ const ROWS = [
   },
   {
     "number": 173,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.70277877099055, 137.21394694722082",
+    "coordType": "coordinate",
+    "lat": 36.70277877099055,
+    "lng": 137.21394694722082,
     "remark": null
   },
   {
     "number": 174,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.70177875647627, 137.2094728646072",
+    "coordType": "coordinate",
+    "lat": 36.70177875647627,
+    "lng": 137.2094728646072,
     "remark": null
   },
   {
     "number": 175,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
-    "lat": null,
-    "lng": null,
+    "coordRaw": "36.70065867741735, 137.2114602207973",
+    "coordType": "coordinate",
+    "lat": 36.70065867741735,
+    "lng": 137.2114602207973,
     "remark": null
   },
   {
@@ -1417,8 +1417,8 @@ const ROWS = [
   },
   {
     "number": 178,
-    "coordRaw": "177と178で道が重複しています。",
-    "coordType": "note",
+    "coordRaw": "",
+    "coordType": "blank",
     "lat": null,
     "lng": null,
     "remark": "177と重複"
@@ -1545,8 +1545,8 @@ const ROWS = [
   },
   {
     "number": 194,
-    "coordRaw": "193と194で道が重複しています。",
-    "coordType": "note",
+    "coordRaw": "",
+    "coordType": "blank",
     "lat": null,
     "lng": null,
     "remark": "193と\n完全に重複"
@@ -1605,7 +1605,7 @@ const ROWS = [
     "coordType": "blank",
     "lat": null,
     "lng": null,
-    "remark": "A-B間は駐車場のため\n発見できず"
+    "remark": "A-B間は駐車場のため\n発見できず　9/14再確認発見できず"
   },
   {
     "number": 202,
@@ -1905,8 +1905,8 @@ const ROWS = [
   },
   {
     "number": 239,
-    "coordRaw": "不要",
-    "coordType": "unnecessary",
+    "coordRaw": "",
+    "coordType": "blank",
     "lat": null,
     "lng": null,
     "remark": null
@@ -2069,7 +2069,7 @@ const ROWS = [
     "coordType": "blank",
     "lat": null,
     "lng": null,
-    "remark": null
+    "remark": "9/14確認"
   },
   {
     "number": 260,
@@ -2121,11 +2121,11 @@ const ROWS = [
   },
   {
     "number": 266,
-    "coordRaw": "",
-    "coordType": "blank",
-    "lat": null,
-    "lng": null,
-    "remark": null
+    "coordRaw": "36.845633370645615, 136.98107385669417",
+    "coordType": "coordinate",
+    "lat": 36.845633370645615,
+    "lng": 136.98107385669417,
+    "remark": "9/14座標追加"
   },
   {
     "number": 267,
@@ -2377,11 +2377,11 @@ const ROWS = [
   },
   {
     "number": 298,
-    "coordRaw": "36.59514426979782, 136.92348601036906",
+    "coordRaw": "36.5611748851675, 136.94757060674232",
     "coordType": "coordinate",
-    "lat": 36.59514426979782,
-    "lng": 136.92348601036906,
-    "remark": "撮影より：297と同様の座標です。座標が間違っている可能性があります。"
+    "lat": 36.5611748851675,
+    "lng": 136.94757060674232,
+    "remark": "9/14座標変更"
   },
   {
     "number": 299,
