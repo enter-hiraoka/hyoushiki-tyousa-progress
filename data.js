@@ -357,7 +357,7 @@ const ROWS = [
     "lat": 36.84498941300159,
     "lng": 137.4329786715994,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 41,
@@ -366,7 +366,7 @@ const ROWS = [
     "lat": 36.855272066835774,
     "lng": 137.4173221212794,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 42,
@@ -375,7 +375,7 @@ const ROWS = [
     "lat": 36.86186193302793,
     "lng": 137.4154381461416,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 43,
@@ -384,7 +384,7 @@ const ROWS = [
     "lat": 36.81505808554382,
     "lng": 137.39852156729737,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 44,
@@ -402,7 +402,7 @@ const ROWS = [
     "lat": 36.82463029963315,
     "lng": 137.41422516060084,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 46,
@@ -411,7 +411,7 @@ const ROWS = [
     "lat": 36.82332847493593,
     "lng": 137.41350817933366,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 47,
@@ -420,7 +420,7 @@ const ROWS = [
     "lat": 36.79948904353789,
     "lng": 137.39803338302218,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 48,
@@ -429,7 +429,7 @@ const ROWS = [
     "lat": 36.81866087702757,
     "lng": 137.4030139069016,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 49,
@@ -438,7 +438,7 @@ const ROWS = [
     "lat": 36.820779307468065,
     "lng": 137.40543479890812,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 50,
@@ -447,7 +447,7 @@ const ROWS = [
     "lat": 36.82876650418736,
     "lng": 137.4091298569748,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 51,
@@ -456,7 +456,7 @@ const ROWS = [
     "lat": 36.82777273401649,
     "lng": 137.41166304208136,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 52,
@@ -465,7 +465,7 @@ const ROWS = [
     "lat": 36.82593406822863,
     "lng": 137.40762986093833,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 53,
@@ -474,7 +474,7 @@ const ROWS = [
     "lat": 36.81355802646486,
     "lng": 137.41123521262122,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 54,
@@ -483,7 +483,7 @@ const ROWS = [
     "lat": 36.84251652838738,
     "lng": 137.4249602055079,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 55,
@@ -492,7 +492,7 @@ const ROWS = [
     "lat": 36.8268913916792,
     "lng": 137.4111333640247,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 56,
@@ -501,7 +501,7 @@ const ROWS = [
     "lat": 36.810761598167794,
     "lng": 137.41741009201905,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 57,
@@ -519,7 +519,7 @@ const ROWS = [
     "lat": 36.82815372167226,
     "lng": 137.41189349155397,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 59,
@@ -528,7 +528,7 @@ const ROWS = [
     "lat": 36.75710179121284,
     "lng": 137.35987693833033,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 60,
@@ -537,7 +537,7 @@ const ROWS = [
     "lat": 36.75650003516859,
     "lng": 137.3401973510153,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 61,
@@ -546,16 +546,16 @@ const ROWS = [
     "lat": 36.75679790294043,
     "lng": 137.32844279605868,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 62,
-    "coordRaw": "36.77025288613567, 137.34848933595353",
+    "coordRaw": "36.77017551475108, 137.34787915808394",
     "coordType": "coordinate",
-    "lat": 36.77025288613567,
-    "lng": 137.34848933595353,
-    "remark": null,
-    "photographer": null
+    "lat": 36.77017551475108,
+    "lng": 137.34787915808394,
+    "remark": "9/14座標変更",
+    "photographer": "平岡"
   },
   {
     "number": 63,
@@ -568,12 +568,12 @@ const ROWS = [
   },
   {
     "number": 64,
-    "coordRaw": "36.753011793916095, 137.3434296008013",
+    "coordRaw": "36.75347142937383, 137.34298910973123",
     "coordType": "coordinate",
-    "lat": 36.753011793916095,
-    "lng": 137.3434296008013,
-    "remark": null,
-    "photographer": null
+    "lat": 36.75347142937383,
+    "lng": 137.34298910973123,
+    "remark": "9/14座標変更",
+    "photographer": "平岡"
   },
   {
     "number": 65,
@@ -582,7 +582,7 @@ const ROWS = [
     "lat": 36.7887331884038,
     "lng": 137.38667644861476,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 66,
@@ -600,7 +600,7 @@ const ROWS = [
     "lat": 36.75720890806775,
     "lng": 137.35143938754274,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 68,
@@ -753,7 +753,7 @@ const ROWS = [
     "lat": 36.70301051293928,
     "lng": 137.21872627641656,
     "remark": "9/7 座標修正",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 85,
@@ -780,7 +780,7 @@ const ROWS = [
     "lat": 36.70752029334978,
     "lng": 137.18955202755578,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 88,
@@ -798,7 +798,7 @@ const ROWS = [
     "lat": 36.700745084854404,
     "lng": 137.2050432114459,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 90,
@@ -834,7 +834,7 @@ const ROWS = [
     "lat": 36.69561216614002,
     "lng": 137.23680734224547,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 94,
@@ -843,7 +843,7 @@ const ROWS = [
     "lat": 36.69761184891824,
     "lng": 137.2561573608756,
     "remark": "9/11歩道橋から道路に変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 95,
@@ -915,7 +915,7 @@ const ROWS = [
     "lat": 36.70242770941294,
     "lng": 137.2079136494036,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 103,
@@ -951,7 +951,7 @@ const ROWS = [
     "lat": 36.66346077938839,
     "lng": 137.22023304899457,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 107,
@@ -973,12 +973,12 @@ const ROWS = [
   },
   {
     "number": 109,
-    "coordRaw": "36.75906755098785, 137.24513151373745",
+    "coordRaw": "36.75817222222222, 137.24485830555557",
     "coordType": "coordinate",
-    "lat": 36.75906755098785,
-    "lng": 137.24513151373745,
-    "remark": null,
-    "photographer": null
+    "lat": 36.75817222222222,
+    "lng": 137.24485830555557,
+    "remark": "9/14座標変更",
+    "photographer": "平岡"
   },
   {
     "number": 110,
@@ -987,7 +987,7 @@ const ROWS = [
     "lat": 36.74617972823617,
     "lng": 137.22908213430426,
     "remark": "9/14座標追加",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 111,
@@ -1005,7 +1005,7 @@ const ROWS = [
     "lat": 36.75272137907275,
     "lng": 137.23015977726197,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 113,
@@ -1014,7 +1014,7 @@ const ROWS = [
     "lat": 36.695013150011555,
     "lng": 137.22608513517463,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 114,
@@ -1023,7 +1023,7 @@ const ROWS = [
     "lat": 36.716096933854374,
     "lng": 137.15811325759162,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 115,
@@ -1032,7 +1032,7 @@ const ROWS = [
     "lat": 36.73402286196292,
     "lng": 137.24147736972685,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 116,
@@ -1050,7 +1050,7 @@ const ROWS = [
     "lat": 36.71369166093783,
     "lng": 137.236776599175,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 118,
@@ -1059,7 +1059,7 @@ const ROWS = [
     "lat": 36.675267494777664,
     "lng": 137.25304246631214,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 119,
@@ -1095,7 +1095,7 @@ const ROWS = [
     "lat": 36.72187521786725,
     "lng": 137.24924404931087,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 123,
@@ -1104,7 +1104,7 @@ const ROWS = [
     "lat": 36.666076173524765,
     "lng": 137.21656873177676,
     "remark": "9/10座標間違いありのため差し替え",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 124,
@@ -1113,7 +1113,7 @@ const ROWS = [
     "lat": 36.67764373869179,
     "lng": 137.23684604070928,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 125,
@@ -1122,7 +1122,7 @@ const ROWS = [
     "lat": 36.71233430559945,
     "lng": 137.20132321296563,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 126,
@@ -1158,7 +1158,7 @@ const ROWS = [
     "lat": 36.69797129403992,
     "lng": 137.25660696310462,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 130,
@@ -1167,7 +1167,7 @@ const ROWS = [
     "lat": 36.66331741170158,
     "lng": 137.2106282968834,
     "remark": "9/10座標間違いありのため差し替え",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 131,
@@ -1185,7 +1185,7 @@ const ROWS = [
     "lat": 36.65883176682048,
     "lng": 137.21064295565463,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 133,
@@ -1203,7 +1203,7 @@ const ROWS = [
     "lat": 36.64536413983268,
     "lng": 137.1939684817777,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 135,
@@ -1212,7 +1212,7 @@ const ROWS = [
     "lat": 36.72948709829376,
     "lng": 137.25839757106505,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 136,
@@ -1230,7 +1230,7 @@ const ROWS = [
     "lat": 36.72182973229955,
     "lng": 137.25067319553457,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 138,
@@ -1248,7 +1248,7 @@ const ROWS = [
     "lat": 36.74605053690751,
     "lng": 137.22900010235688,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 140,
@@ -1257,7 +1257,7 @@ const ROWS = [
     "lat": 36.74561175396438,
     "lng": 137.24081662269592,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 141,
@@ -1266,7 +1266,7 @@ const ROWS = [
     "lat": 36.74590413564482,
     "lng": 137.24480539398394,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 142,
@@ -1284,7 +1284,7 @@ const ROWS = [
     "lat": 36.70289942948014,
     "lng": 137.2264463663122,
     "remark": "9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 144,
@@ -1293,7 +1293,7 @@ const ROWS = [
     "lat": 36.73947331242485,
     "lng": 137.18304356024896,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 145,
@@ -1302,7 +1302,7 @@ const ROWS = [
     "lat": 36.70059992627651,
     "lng": 137.14571263119,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 146,
@@ -1311,7 +1311,7 @@ const ROWS = [
     "lat": 36.762008209947474,
     "lng": 137.25066340756868,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 147,
@@ -1324,12 +1324,12 @@ const ROWS = [
   },
   {
     "number": 148,
-    "coordRaw": "36.73733345869043, 137.24746405580785",
+    "coordRaw": "36.737367108151176, 137.24824403503635",
     "coordType": "coordinate",
-    "lat": 36.73733345869043,
-    "lng": 137.24746405580785,
-    "remark": null,
-    "photographer": null
+    "lat": 36.737367108151176,
+    "lng": 137.24824403503635,
+    "remark": "9/14座標変更",
+    "photographer": "平岡"
   },
   {
     "number": 149,
@@ -1338,7 +1338,7 @@ const ROWS = [
     "lat": 36.63720438996285,
     "lng": 137.20931866751303,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 150,
@@ -1347,7 +1347,7 @@ const ROWS = [
     "lat": 36.58329836792583,
     "lng": 137.20621142208583,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 151,
@@ -1356,7 +1356,7 @@ const ROWS = [
     "lat": 36.57386880299204,
     "lng": 137.18853583557598,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 152,
@@ -1365,7 +1365,7 @@ const ROWS = [
     "lat": 36.58977022151657,
     "lng": 137.21256159819174,
     "remark": "9/10座標間違いありのため差し替え",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 153,
@@ -1383,7 +1383,7 @@ const ROWS = [
     "lat": 36.598751412105905,
     "lng": 137.20853903502407,
     "remark": "9/10座標間違いありのため差し替え",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 155,
@@ -1392,7 +1392,7 @@ const ROWS = [
     "lat": 36.59266175172998,
     "lng": 137.21759811968596,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 156,
@@ -1401,7 +1401,7 @@ const ROWS = [
     "lat": 36.568062003294735,
     "lng": 137.21048102563458,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 157,
@@ -1410,7 +1410,7 @@ const ROWS = [
     "lat": 36.60832294922323,
     "lng": 137.28346975706663,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 158,
@@ -1419,7 +1419,7 @@ const ROWS = [
     "lat": 36.615684642342934,
     "lng": 137.2816777949648,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 159,
@@ -1455,7 +1455,7 @@ const ROWS = [
     "lat": 36.61280993295218,
     "lng": 137.19193867013237,
     "remark": "区間延長、9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 163,
@@ -1464,7 +1464,7 @@ const ROWS = [
     "lat": 36.661652030224666,
     "lng": 137.14853770172093,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 164,
@@ -1491,7 +1491,7 @@ const ROWS = [
     "lat": 36.62927251358262,
     "lng": 137.21244085390038,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 167,
@@ -1500,7 +1500,7 @@ const ROWS = [
     "lat": 36.67042506707824,
     "lng": 137.1728237874127,
     "remark": "9/4座標確認\n9/11座標位置変更しました。",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 168,
@@ -1509,7 +1509,7 @@ const ROWS = [
     "lat": 36.70137122743806,
     "lng": 137.2175364123749,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 169,
@@ -1518,7 +1518,7 @@ const ROWS = [
     "lat": 36.7565543411473,
     "lng": 137.29212224313645,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 170,
@@ -1527,7 +1527,7 @@ const ROWS = [
     "lat": 36.71984408546654,
     "lng": 137.14924970274438,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 171,
@@ -1536,7 +1536,7 @@ const ROWS = [
     "lat": 36.73374755595665,
     "lng": 137.2045220642663,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 172,
@@ -1545,7 +1545,7 @@ const ROWS = [
     "lat": 36.74359339598439,
     "lng": 137.2448304034373,
     "remark": "9/4座標確認",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 173,
@@ -1805,7 +1805,7 @@ const ROWS = [
     "coordType": "blank",
     "lat": null,
     "lng": null,
-    "remark": "A-B間は駐車場のため\n発見できず　9/14再確認発見できず",
+    "remark": "A-B間は駐車場のため発見できず\n9/14　再確認発見できず",
     "photographer": null
   },
   {
@@ -2679,7 +2679,7 @@ const ROWS = [
     "lat": 36.5611748851675,
     "lng": 136.94757060674232,
     "remark": "9/14座標変更",
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 299,
@@ -2760,7 +2760,7 @@ const ROWS = [
     "lat": 36.58524786555213,
     "lng": 136.91529033738277,
     "remark": null,
-    "photographer": null
+    "photographer": "平岡"
   },
   {
     "number": 308,
