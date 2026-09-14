@@ -19,6 +19,7 @@
   --reshoot:#123f9e;
   --reshoot-text:#fff;
   --reshoot-done:#c800a0;
+  --company-shot:#0f9d58;
   --street:#1f6fe0;
   --gmap:#eef1f5;
 }
@@ -250,6 +251,7 @@ a{color:inherit;text-decoration:none}
 .number-pin>span.reshoot-pin{background:var(--reshoot);color:var(--reshoot-text)}
 .number-pin>span.reshoot-done-pin{background:var(--reshoot-done)}
 .number-pin>span.unnecessary-pin{background:#d98c8c;color:#fff}
+.number-pin>span.company-shot-pin{background:var(--company-shot);color:#fff}
 .number-pin>span.selected-pin{
   transform:scale(1.28);
   border-width:3px;
@@ -549,6 +551,7 @@ a{color:inherit;text-decoration:none}
 .point-row.active{border-color:#9ab1c9;background:#f3f8ff}
 .point-row.shot{background:#fff6f6;border-color:#f0d6d6}
 .point-row.unnecessary-row{background:#f4f6f8}
+.point-row.company-shot-row{background:#eefaf1;border-color:#b9e4c6}
 .point-row.reshoot-row{background:#eaf0fb;border-color:#a9bfe6}
 .point-row.reshoot-done-row{background:#fdf0fa;border-color:#eeb8e2}
 .point-flag{
@@ -573,6 +576,8 @@ a{color:inherit;text-decoration:none}
 .shoot-check input:disabled{cursor:not-allowed}
 .shoot-check-mobile{display:none}
 .auto-shot-label{font-size:11px;font-weight:800;color:var(--muted);text-align:center}
+.company-shot-label{color:var(--company-shot)}
+.detail-company-shot{color:var(--company-shot);background:#e3f6e9}
 .row-delete-button{
   display:block;
   width:100%;

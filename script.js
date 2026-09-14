@@ -375,6 +375,12 @@
     return r.coordType === "unnecessary" || r.markedUnnecessary === true;
   }
 
+  // Excelの「撮影者」欄が「企」（業者による撮影）になっている地点は、
+  // このアプリでチェックを入れなくても撮影済み扱いにする。
+  function isCompanyShot(r) {
+    return r.photographer === "企" && !isAutoShot(r);
+  }
+
   function isUserModified(r) {
     return !!r.userAdded || !!r.overridden || !!r.markedUnnecessary;
   }
@@ -443,7 +449,7 @@
   }
 
   function isShot(r) {
-    return isAutoShot(r) || shotState[String(r.number)] === true;
+    return isAutoShot(r) || isCompanyShot(r) || shotState[String(r.number)] === true;
   }
 
   function escapeHtml(text) {
@@ -515,7 +521,7 @@
 
     const classes = [
       r.markedUnnecessary ? "unnecessary-pin" :
-        needsReshoot(r) ? "reshoot-pin" : (reshootResolved(r) ? "reshoot-done-pin" : (isShot(r) ? "shot-pin" : "")),
+        needsReshoot(r) ? "reshoot-pin" : (reshootResolved(r) ? "reshoot-done-pin" : (isCompanyShot(r) ? "company-shot-pin" : (isShot(r) ? "shot-pin" : ""))),
       highlightedNumber === r.number ? "selected-pin" : "",
       overlapCount > 0 ? "has-overlap" : ""
     ].filter(Boolean).join(" ");
@@ -860,7 +866,7 @@
   }
 
   function setShot(r, checked) {
-    if (isAutoShot(r)) return true;
+    if (isAutoShot(r) || isCompanyShot(r)) return true;
 
     const nums = pairedNumbers(r.number);
     nums.forEach(n => {
@@ -951,6 +957,8 @@
     if (r.coordType !== "coordinate") {
       const shotStatusHtml = isAutoShot(r)
         ? `<span class="detail-auto-shot">不要</span>`
+        : isCompanyShot(r)
+        ? `<span class="detail-auto-shot detail-company-shot">企業撮影済み</span>`
         : "";
       const nonCoordHtml = `
         <div class="detail-headerline">
@@ -990,6 +998,8 @@
         <h2 class="detail-number"><strong>${r.number}</strong></h2>
         ${isAutoShot(r)
           ? `<span class="detail-auto-shot">不要</span>`
+          : isCompanyShot(r)
+          ? `<span class="detail-auto-shot detail-company-shot">企業撮影済み</span>`
           : `<label class="detail-shot-inline"><input id="detailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>`
         }
       </div>
@@ -1004,8 +1014,10 @@
       ${isAutoShot(r) ? "" : reshootBlockHtml(r, "detail", true)}
     `;
 
-    if (!isAutoShot(r)) {
+    if (!isAutoShot(r) && !isCompanyShot(r)) {
       document.getElementById("detailShotCheck")?.addEventListener("change", e => setShot(r, e.target.checked));
+    }
+    if (!isAutoShot(r)) {
       bindReshootHandlers(r, "detail");
     }
 
@@ -1016,6 +1028,8 @@
           <h2 class="detail-number"><strong>${r.number}</strong></h2>
           ${isAutoShot(r)
             ? `<span class="detail-auto-shot">不要</span>`
+            : isCompanyShot(r)
+            ? `<span class="detail-auto-shot detail-company-shot">企業撮影済み</span>`
             : `<label class="detail-shot-inline"><input id="mobileDetailShotCheck" type="checkbox" ${isShot(r) ? "checked" : ""}><span>撮影済み</span></label>`
           }
         </div>
@@ -1131,6 +1145,7 @@
       + (r.userAdded ? " user-added" : "")
       + (isConfirmedShot(r) ? " shot" : "")
       + (isAutoShot(r) ? " unnecessary-row" : "")
+      + (isCompanyShot(r) ? " company-shot-row" : "")
       + (needsReshoot(r) ? " reshoot-row" : "")
       + (reshootResolved(r) ? " reshoot-done-row" : "");
 
@@ -1187,6 +1202,10 @@
       tail = document.createElement("span");
       tail.className = "auto-shot-label";
       tail.textContent = "済";
+    } else if (isCompanyShot(r)) {
+      tail = document.createElement("span");
+      tail.className = "auto-shot-label company-shot-label";
+      tail.textContent = "企撮影済";
     } else if (r.coordType !== "coordinate") {
       tail = document.createElement("span");
       tail.className = "auto-shot-label";
