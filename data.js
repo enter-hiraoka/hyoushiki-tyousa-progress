@@ -654,7 +654,7 @@ const ROWS = [
     "lat": 36.67979174995322,
     "lng": 137.32803343485517,
     "remark": "9/13座標追加",
-    "photographer": null
+    "photographer": "企"
   },
   {
     "number": 74,
