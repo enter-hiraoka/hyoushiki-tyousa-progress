@@ -567,7 +567,13 @@
     changedNumbers.forEach(number => {
       const r = allRows.find(x => x.number === number);
       const marker = markerMap.get(number);
-      if (r && marker) marker.setIcon(iconFor(r));
+      if (r && marker) {
+        marker.setIcon(iconFor(r));
+        // ズーム直後にアイコンを差し替えると、Leaflet側の位置反映と
+        // タイミングがずれて画面上の位置がズレて見えることがあるため、
+        // 差し替え後に同じ座標を明示的に再セットして位置を強制的に再計算させる。
+        marker.setLatLng(marker.getLatLng());
+      }
     });
   }
 
